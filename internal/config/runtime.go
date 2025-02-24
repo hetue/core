@@ -6,3 +6,7 @@ type Runtime struct {
 	// 是否在出错时打印输出
 	Pwe *bool `default:"true"`
 }
+
+func newRuntime(wrapper *Wrapper) *Runtime {
+	return wrapper.Runtime
+}

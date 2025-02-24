@@ -14,3 +14,7 @@ type Retry struct {
 	// 时间
 	Timeout time.Duration `default:"${60m}"`
 }
+
+func newRetry(wrapper *Wrapper) *Retry {
+	return wrapper.Retry
+}

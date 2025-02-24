@@ -8,3 +8,7 @@ type Logging struct {
 	// 是否在出错时打印输出
 	Pwe *bool `default:"true"`
 }
+
+func newLogging(wrapper *Wrapper) *Logging {
+	return wrapper.Logging
+}

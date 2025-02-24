@@ -24,6 +24,10 @@ type Proxy struct {
 	Password string
 }
 
+func newProxy(wrapper *Wrapper) *Proxy {
+	return wrapper.Proxy
+}
+
 func (p *Proxy) Addr() (addr string) {
 	if "" != p.Username && "" != p.Password {
 		addr = fmt.Sprintf("%s://%s:%s@%s", p.Scheme, url.QueryEscape(p.Username), url.QueryEscape(p.Password), p.Host)
