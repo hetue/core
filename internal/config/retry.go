@@ -2,6 +2,8 @@ package config
 
 import (
 	"time"
+
+	"github.com/goexl/gox"
 )
 
 type Retry struct {
@@ -13,6 +15,8 @@ type Retry struct {
 	Backoff time.Duration `default:"${5s}"`
 	// 时间
 	Timeout time.Duration `default:"${60m}"`
+
+	_ gox.Pointerized
 }
 
 func newRetry(wrapper *Wrapper) *Retry {

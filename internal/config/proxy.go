@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"net/url"
+
+	"github.com/goexl/gox"
 )
 
 type Proxy struct {
@@ -22,6 +24,8 @@ type Proxy struct {
 	Username string
 	// 代理认证密码
 	Password string
+
+	_ gox.Pointerized
 }
 
 func newProxy(wrapper *Wrapper) *Proxy {

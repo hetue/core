@@ -1,5 +1,9 @@
 package config
 
+import (
+	"github.com/goexl/gox"
+)
+
 type Logging struct {
 	// 是否显示详细信息
 	Verbose bool `default:"false"`
@@ -7,6 +11,8 @@ type Logging struct {
 	Level string `default:"info"`
 	// 是否在出错时打印输出
 	Pwe *bool `default:"true"`
+
+	_ gox.Pointerized
 }
 
 func newLogging(wrapper *Wrapper) *Logging {
