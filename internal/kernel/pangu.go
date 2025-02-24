@@ -6,6 +6,7 @@ import (
 
 func init() {
 	pangu.New().Get().Dependency().Puts(
-		newCommand,
+		newContext, // 上下文
+		newCommand, // 命令执行
 	).Build().Apply()
 }
