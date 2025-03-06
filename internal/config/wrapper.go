@@ -5,8 +5,6 @@ import (
 )
 
 type Wrapper struct {
-	Logging *Logging
-	Proxy   *Proxy
 	Retry   *Retry
 	Runtime *Runtime
 }

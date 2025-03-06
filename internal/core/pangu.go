@@ -1,4 +1,4 @@
-package kernel
+package core
 
 import (
 	"github.com/pangum/pangu"
@@ -6,6 +6,7 @@ import (
 
 func init() {
 	pangu.New().Get().Dependency().Puts(
-		newContext, // 上下文
+		newCommand, // 命令执行
+		newHttp,    // 客户端
 	).Build().Apply()
 }
