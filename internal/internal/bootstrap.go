@@ -16,7 +16,7 @@ func NewBootstrap(param *param.Bootstrap) *Bootstrap {
 	}
 }
 
-func (b *Bootstrap) Boot() error {
+func (b *Bootstrap) Boot() {
 	application := pangu.New()
 	if "" != b.param.Name {
 		application.Name(b.param.Name)
