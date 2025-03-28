@@ -28,12 +28,22 @@ func newRun(run get.Run) *Run {
 	return &Run{
 		Command: pangu.NewCommand("run").Aliases("r").Usage("运行").Build(),
 
-		steps:  run.Steps,
+		retry:  run.Retry,
 		logger: run.Logger,
 	}
 }
 
 func (r *Run) Run(ctx context.Context) (err error) {
+	if ie := pangu.New().Get().Dependency().Get(r.getSteps).Build().Build().Inject(); nil != ie {
+		err = ie
+	} else {
+		err = r.run(ctx)
+	}
+
+	return
+}
+
+func (r *Run) run(ctx context.Context) (err error) {
 	now := time.Now()
 	fields := gox.Fields[any]{
 		field.New("steps", r.steps),
@@ -47,7 +57,7 @@ func (r *Run) Run(ctx context.Context) (err error) {
 	// 执行插件
 	waiter := new(sync.WaitGroup)
 	for _, step := range r.steps {
-		err = r.run(&timeout, step, waiter)
+		err = r.execute(&timeout, step, waiter)
 		if nil != err && !step.Retryable() {
 			break
 		}
@@ -65,7 +75,7 @@ func (r *Run) Run(ctx context.Context) (err error) {
 	return
 }
 
-func (r *Run) run(ctx *context.Context, step kernel.Step, waiter *sync.WaitGroup) (err error) {
+func (r *Run) execute(ctx *context.Context, step kernel.Step, waiter *sync.WaitGroup) (err error) {
 	if step.Asyncable() {
 		err = r.async(ctx, step, waiter)
 	} else {
@@ -76,14 +86,14 @@ func (r *Run) run(ctx *context.Context, step kernel.Step, waiter *sync.WaitGroup
 }
 
 func (r *Run) sync(ctx *context.Context, step kernel.Step) error {
-	return r.exec(ctx, step)
+	return r.executeStep(ctx, step)
 }
 
 func (r *Run) async(ctx *context.Context, step kernel.Step, wg *sync.WaitGroup) (err error) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err = r.exec(ctx, step); nil != err {
+		if err = r.executeStep(ctx, step); nil != err {
 			panic(err)
 		}
 	}()
@@ -91,7 +101,7 @@ func (r *Run) async(ctx *context.Context, step kernel.Step, wg *sync.WaitGroup) 
 	return
 }
 
-func (r *Run) exec(ctx *context.Context, step kernel.Step) (err error) {
+func (r *Run) executeStep(ctx *context.Context, step kernel.Step) (err error) {
 	if !step.Runnable() {
 		return
 	}
@@ -132,4 +142,8 @@ func (r *Run) exec(ctx *context.Context, step kernel.Step) (err error) {
 	}
 
 	return
+}
+
+func (r *Run) getSteps(steps []kernel.Step) {
+	r.steps = steps
 }

@@ -5,8 +5,8 @@ import (
 )
 
 type Wrapper struct {
-	Retry   *Retry
-	Runtime *Runtime
+	Retry   *Retry   `default:"{}" json:"retry,omitempty"`
+	Runtime *Runtime `default:"{}" json:"runtime,omitempty"`
 }
 
 func newWrapper(config *pangu.Config) (wrapper *Wrapper, err error) {
