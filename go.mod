@@ -3,7 +3,7 @@ module github.com/hetue/core
 go 1.24
 
 require (
-	github.com/goexl/gex v0.4.7
+	github.com/goexl/gex v0.4.8
 	github.com/goexl/gox v1.9.2
 	github.com/goexl/log v0.0.9
 	github.com/pangum/pangu v1.5.9
