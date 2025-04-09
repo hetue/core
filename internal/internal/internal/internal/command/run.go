@@ -46,7 +46,7 @@ func (r *Run) Run(ctx context.Context) (err error) {
 func (r *Run) run(ctx context.Context) (err error) {
 	now := time.Now()
 	fields := gox.Fields[any]{
-		field.New("steps", r.steps),
+		field.New("steps", r.stepsNames()),
 	}
 	r.logger.Info("插件执行开始", fields...)
 
@@ -146,4 +146,13 @@ func (r *Run) executeStep(ctx *context.Context, step kernel.Step) (err error) {
 
 func (r *Run) getSteps(steps []kernel.Step) {
 	r.steps = steps
+}
+
+func (r *Run) stepsNames() (names []any) {
+	names = make([]any, 0, len(r.steps))
+	for _, step := range r.steps {
+		names = append(names, step.Name())
+	}
+
+	return
 }
