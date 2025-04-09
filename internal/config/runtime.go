@@ -1,6 +1,9 @@
 package config
 
 import (
+	"os"
+	"path/filepath"
+
 	"github.com/goexl/gox"
 )
 
@@ -17,4 +20,16 @@ type Runtime struct {
 
 func newRuntime(wrapper *Wrapper) *Runtime {
 	return wrapper.Runtime
+}
+
+func (*Runtime) Path(required string, optionals ...string) (final string) {
+	if home, uhe := os.UserHomeDir(); nil == uhe {
+		finals := make([]string, 0, 1+len(optionals)+1)
+		finals = append(finals, home)
+		finals = append(finals, required)
+		finals = append(finals, optionals...)
+		final = filepath.Join(finals...)
+	}
+
+	return
 }
