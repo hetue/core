@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/hetue/core/internal/internal/internal"
 	"github.com/hetue/core/internal/internal/internal/constant"
@@ -36,25 +37,32 @@ func (b *Bootstrap) Boot(constructor any) {
 		application.Metadata(key, value)
 	}
 
-	application.Config().Getter(b.getter)                                   // 环境变量
+	application = application.Config().Getter(b).Build()                    // 环境变量
 	application.Get().Dependency().Put(constructor).Build().Build().Apply() // 注入所有步骤
 	application.Get().Run(internal.NewBootstrap)                            // 执行逻辑
 }
 
-func (b *Bootstrap) getter(key string) (value string) {
+func (b *Bootstrap) Get(key string) (value string) {
 	value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixCi, key))
 	if "" == value {
 		value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixPlugin, key))
 	}
 
 	// 修复一些特殊配置项
-	value = b.fixDrone(value) // Drone系统配置项操蛋的注入方式，部分用JSON部分用环境变量直接注入
+	value = b.fixDrone(key, value) // Drone系统配置项操蛋的注入方式，部分用JSON部分用环境变量直接注入
 
 	return
 }
 
-func (b *Bootstrap) fixDrone(from string) (value string) {
+func (b *Bootstrap) fixDrone(key string, from string) (value string) {
 	if "" == os.Getenv(constant.PlatformDrone) {
+		return
+	}
+
+	if "" == strings.TrimSpace(from) { // 修正空值
+		from = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixDrone, key))
+	}
+	if "" == strings.TrimSpace(from) { // 及时回退，如果确实没有配置值
 		return
 	}
 
@@ -63,6 +71,8 @@ func (b *Bootstrap) fixDrone(from string) (value string) {
 		value = b.fixJsonObject(value)
 	} else if constant.JsonArrayStart == (from)[0:1] && constant.JsonArrayEnd == (from)[size-1:size] {
 		value = b.fixJsonArray(value)
+	} else {
+		value = from
 	}
 
 	return
