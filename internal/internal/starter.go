@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hetue/core/internal/internal/internal"
-	"github.com/hetue/core/internal/internal/internal/constant"
-	"github.com/hetue/core/internal/internal/param"
-	"github.com/pangum/pangu"
+	"github.com/hetue/boot/internal/internal/internal"
+	"github.com/hetue/boot/internal/internal/internal/constant"
+	"github.com/hetue/boot/internal/internal/param"
+	"github.com/harluo/di"
 )
 
 type Bootstrap struct {
@@ -23,7 +23,7 @@ func NewBootstrap(param *param.Bootstrap) *Bootstrap {
 }
 
 func (b *Bootstrap) Boot(constructor any) {
-	application := pangu.New()
+	application := di.New()
 	if "" != b.param.Name {
 		application.Name(b.param.Name)
 	}

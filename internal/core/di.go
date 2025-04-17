@@ -1,11 +1,11 @@
 package core
 
 import (
-	"github.com/pangum/pangu"
+	"github.com/pangum/core"
 )
 
 func init() {
-	pangu.New().Get().Dependency().Puts(
+	core.New().Get().Dependency().Puts(
 		newCommand, // 命令执行
 	).Build().Apply()
 }

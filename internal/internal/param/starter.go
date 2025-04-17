@@ -1,7 +1,7 @@
 package param
 
 import (
-	"github.com/hetue/core/internal/internal/internal/config"
+	"github.com/hetue/boot/internal/internal/internal/config"
 )
 
 type Bootstrap struct {
