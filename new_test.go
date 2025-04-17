@@ -1,11 +1,11 @@
-package core_test
+package boot_test
 
 import (
 	"testing"
 
-	"github.com/hetue/core"
+	"github.com/hetue/boot"
 )
 
 func TestNew(t *testing.T) {
-	core.New().Build()
+	boot.New().Build()
 }

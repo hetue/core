@@ -1,9 +1,9 @@
-package core
+package boot
 
 import (
-	"github.com/hetue/core/internal/builder"
+	"github.com/hetue/boot/internal/builder"
 )
 
-func New() *builder.Bootstrap {
-	return builder.NewBootstrap()
+func New() *builder.Starter {
+	return builder.NewStarter()
 }

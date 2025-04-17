@@ -1,11 +1,11 @@
 package kernel
 
 import (
-	"github.com/pangum/pangu"
+	"github.com/harluo/di"
 )
 
 func init() {
-	pangu.New().Get().Dependency().Puts(
+	di.New().Get().Dependency().Puts(
 		newContext, // 上下文
 	).Build().Apply()
 }

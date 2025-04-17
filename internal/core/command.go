@@ -3,8 +3,8 @@ package core
 import (
 	"github.com/goexl/gex"
 	"github.com/goexl/gox"
-	"github.com/hetue/core/internal/config"
-	"github.com/hetue/core/internal/kernel"
+	"github.com/hetue/boot/internal/config"
+	"github.com/hetue/boot/internal/kernel"
 )
 
 type Command struct {

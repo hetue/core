@@ -1,11 +1,11 @@
 package core
 
 import (
-	"github.com/pangum/core"
+	"github.com/harluo/di"
 )
 
 func init() {
-	core.New().Get().Dependency().Puts(
+	di.New().Get().Dependency().Puts(
 		newCommand, // 命令执行
 	).Build().Apply()
 }

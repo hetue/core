@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/pangum/pangu"
+	"github.com/harluo/boot"
 )
 
 type Wrapper struct {
@@ -9,7 +9,7 @@ type Wrapper struct {
 	Runtime *Runtime `default:"{}" json:"runtime,omitempty"`
 }
 
-func newWrapper(config *pangu.Config) (wrapper *Wrapper, err error) {
+func newWrapper(config *boot.Config) (wrapper *Wrapper, err error) {
 	wrapper = new(Wrapper)
 	err = config.Build().Get(wrapper)
 

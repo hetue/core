@@ -6,24 +6,27 @@ import (
 	"os"
 	"strings"
 
+	"github.com/harluo/boot"
+	"github.com/harluo/di"
 	"github.com/hetue/boot/internal/internal/internal"
 	"github.com/hetue/boot/internal/internal/internal/constant"
 	"github.com/hetue/boot/internal/internal/param"
-	"github.com/harluo/di"
 )
 
-type Bootstrap struct {
-	param *param.Bootstrap
+type Starter struct {
+	param *param.Starter
 }
 
-func NewBootstrap(param *param.Bootstrap) *Bootstrap {
-	return &Bootstrap{
+func NewStarter(param *param.Starter) *Starter {
+	return &Starter{
 		param: param,
 	}
 }
 
-func (b *Bootstrap) Boot(constructor any) {
-	application := di.New()
+func (b *Starter) Boot(constructor any) {
+	di.New().Get().Dependency().Put(constructor).Build().Build().Apply() // 注入所有步骤
+
+	application := boot.New()
 	if "" != b.param.Name {
 		application.Name(b.param.Name)
 	}
@@ -37,12 +40,11 @@ func (b *Bootstrap) Boot(constructor any) {
 		application.Metadata(key, value)
 	}
 
-	application = application.Config().Getter(b).Build()                    // 环境变量
-	application.Get().Dependency().Put(constructor).Build().Build().Apply() // 注入所有步骤
-	application.Get().Run(internal.NewBootstrap)                            // 执行逻辑
+	application = application.Config().Getter(b).Build() // 环境变量
+	application.Get().Run(internal.NewStarter)           // 执行逻辑
 }
 
-func (b *Bootstrap) Get(key string) (value string) {
+func (b *Starter) Get(key string) (value string) {
 	value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixCi, key))
 	if "" == value {
 		value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixPlugin, key))
@@ -54,7 +56,7 @@ func (b *Bootstrap) Get(key string) (value string) {
 	return
 }
 
-func (b *Bootstrap) fixDrone(key string, from string) (value string) {
+func (b *Starter) fixDrone(key string, from string) (value string) {
 	if "" == os.Getenv(constant.PlatformDrone) {
 		return
 	}
@@ -78,7 +80,7 @@ func (b *Bootstrap) fixDrone(key string, from string) (value string) {
 	return
 }
 
-func (b *Bootstrap) fixJsonObject(from string) (to string) {
+func (b *Starter) fixJsonObject(from string) (to string) {
 	object := make(map[string]any)
 	if ue := json.Unmarshal([]byte(from), &object); nil != ue {
 		to = from
@@ -97,7 +99,7 @@ func (b *Bootstrap) fixJsonObject(from string) (to string) {
 	return
 }
 
-func (b *Bootstrap) fixJsonArray(from string) (to string) {
+func (b *Starter) fixJsonArray(from string) (to string) {
 	array := make([]any, 0)
 	if ue := json.Unmarshal([]byte(from), &array); nil != ue {
 		to = from
@@ -116,7 +118,7 @@ func (b *Bootstrap) fixJsonArray(from string) (to string) {
 	return
 }
 
-func (b *Bootstrap) fixArrayExpr(array *[]any) {
+func (b *Starter) fixArrayExpr(array *[]any) {
 	for _, value := range *array {
 		switch vt := value.(type) {
 		case []any:
@@ -127,7 +129,7 @@ func (b *Bootstrap) fixArrayExpr(array *[]any) {
 	}
 }
 
-func (b *Bootstrap) fixObjectExpr(object map[string]any) {
+func (b *Starter) fixObjectExpr(object map[string]any) {
 	for _, value := range object {
 		switch vt := value.(type) {
 		case []any:

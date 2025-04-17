@@ -1,7 +1,7 @@
-package core
+package boot
 
 import (
-	"github.com/hetue/core/internal/kernel"
+	"github.com/hetue/boot/internal/kernel"
 )
 
 // Step 步骤

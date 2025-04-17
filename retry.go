@@ -1,7 +1,7 @@
-package core
+package boot
 
 import (
-	"github.com/hetue/core/internal/config"
+	"github.com/hetue/boot/internal/config"
 )
 
 // Retry 重试配置

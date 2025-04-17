@@ -1,22 +1,23 @@
 package internal
 
 import (
+	"github.com/harluo/boot"
 	"github.com/hetue/boot/internal/internal/internal/internal"
 	"github.com/hetue/boot/internal/internal/internal/internal/command"
 )
 
-type Bootstrap struct {
+type Starter struct {
 	boot.Lifecycle
 
 	run *command.Run
 }
 
-func NewBootstrap(bootstrap internal.Bootstrap) core.Bootstrap {
-	return &Bootstrap{
+func NewStarter(bootstrap internal.Starter) boot.Starter {
+	return &Starter{
 		run: bootstrap.Run,
 	}
 }
 
-func (b *Bootstrap) Startup(application *core.Application) error {
-	return application.Add(b.run)
+func (s *Starter) Startup(application *boot.Application) error {
+	return application.Add(s.run)
 }

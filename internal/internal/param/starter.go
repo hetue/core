@@ -4,7 +4,7 @@ import (
 	"github.com/hetue/boot/internal/internal/internal/config"
 )
 
-type Bootstrap struct {
+type Starter struct {
 	Name      string
 	Usage     string
 	Copyright string
@@ -12,8 +12,8 @@ type Bootstrap struct {
 	Code      *config.Code
 }
 
-func NewBootstrap() *Bootstrap {
-	return &Bootstrap{
+func NewStarter() *Starter {
+	return &Starter{
 		Name:      "hetu",
 		Usage:     "河图持续集成系统插件，可使用`run`命令执行",
 		Copyright: "成都睿景承科技有限公司",

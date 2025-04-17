@@ -5,7 +5,7 @@ import (
 	"github.com/hetue/boot/internal/internal/internal/internal/command"
 )
 
-type Bootstrap struct {
+type Starter struct {
 	di.Get
 
 	Run *command.Run

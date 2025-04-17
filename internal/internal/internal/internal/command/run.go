@@ -10,14 +10,15 @@ import (
 	"github.com/goexl/gox/field"
 	"github.com/goexl/gox/rand"
 	"github.com/goexl/log"
-	"github.com/hetue/core/internal/config"
-	"github.com/hetue/core/internal/internal/internal/internal/command/internal/get"
-	"github.com/hetue/core/internal/kernel"
-	"github.com/pangum/pangu"
+	"github.com/harluo/boot"
+	"github.com/harluo/di"
+	"github.com/hetue/boot/internal/config"
+	"github.com/hetue/boot/internal/internal/internal/internal/command/internal/get"
+	"github.com/hetue/boot/internal/kernel"
 )
 
 type Run struct {
-	*pangu.Command
+	*boot.Command
 
 	steps  []kernel.Step
 	retry  *config.Retry
@@ -26,7 +27,7 @@ type Run struct {
 
 func newRun(run get.Run) *Run {
 	return &Run{
-		Command: pangu.NewCommand("run").Aliases("r").Usage("运行").Build(),
+		Command: boot.NewCommand("run").Aliases("r").Usage("运行").Build(),
 
 		retry:  run.Retry,
 		logger: run.Logger,
@@ -34,7 +35,7 @@ func newRun(run get.Run) *Run {
 }
 
 func (r *Run) Run(ctx context.Context) (err error) {
-	if ie := pangu.New().Get().Dependency().Get(r.getSteps).Build().Build().Inject(); nil != ie {
+	if ie := di.New().Get().Dependency().Get(r.getSteps).Build().Build().Inject(); nil != ie {
 		err = ie
 	} else {
 		err = r.run(ctx)

@@ -2,12 +2,12 @@ package get
 
 import (
 	"github.com/goexl/log"
-	"github.com/hetue/core/internal/config"
-	"github.com/pangum/pangu"
+	"github.com/harluo/di"
+	"github.com/hetue/boot/internal/config"
 )
 
 type Run struct {
-	pangu.Get
+	di.Get
 
 	Retry  *config.Retry
 	Logger log.Logger
