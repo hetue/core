@@ -13,17 +13,17 @@ import (
 	"github.com/hetue/boot/internal/internal/param"
 )
 
-type Starter struct {
+type Booter struct {
 	param *param.Starter
 }
 
-func NewStarter(param *param.Starter) *Starter {
-	return &Starter{
+func NewBooter(param *param.Starter) *Booter {
+	return &Booter{
 		param: param,
 	}
 }
 
-func (b *Starter) Boot(constructor any) {
+func (b *Booter) Boot(constructor any) {
 	di.New().Get().Dependency().Put(constructor).Build().Build().Apply() // 注入所有步骤
 
 	application := boot.New()
@@ -44,7 +44,7 @@ func (b *Starter) Boot(constructor any) {
 	application.Get().Run(internal.NewStarter)           // 执行逻辑
 }
 
-func (b *Starter) Get(key string) (value string) {
+func (b *Booter) Get(key string) (value string) {
 	value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixCi, key))
 	if "" == value {
 		value = os.Getenv(fmt.Sprintf("%s_%s", constant.PrefixPlugin, key))
@@ -56,7 +56,7 @@ func (b *Starter) Get(key string) (value string) {
 	return
 }
 
-func (b *Starter) fixDrone(key string, from string) (value string) {
+func (b *Booter) fixDrone(key string, from string) (value string) {
 	if "" == os.Getenv(constant.PlatformDrone) {
 		return
 	}
@@ -80,7 +80,7 @@ func (b *Starter) fixDrone(key string, from string) (value string) {
 	return
 }
 
-func (b *Starter) fixJsonObject(from string) (to string) {
+func (b *Booter) fixJsonObject(from string) (to string) {
 	object := make(map[string]any)
 	if ue := json.Unmarshal([]byte(from), &object); nil != ue {
 		to = from
@@ -99,7 +99,7 @@ func (b *Starter) fixJsonObject(from string) (to string) {
 	return
 }
 
-func (b *Starter) fixJsonArray(from string) (to string) {
+func (b *Booter) fixJsonArray(from string) (to string) {
 	array := make([]any, 0)
 	if ue := json.Unmarshal([]byte(from), &array); nil != ue {
 		to = from
@@ -118,7 +118,7 @@ func (b *Starter) fixJsonArray(from string) (to string) {
 	return
 }
 
-func (b *Starter) fixArrayExpr(array *[]any) {
+func (b *Booter) fixArrayExpr(array *[]any) {
 	for _, value := range *array {
 		switch vt := value.(type) {
 		case []any:
@@ -129,7 +129,7 @@ func (b *Starter) fixArrayExpr(array *[]any) {
 	}
 }
 
-func (b *Starter) fixObjectExpr(object map[string]any) {
+func (b *Booter) fixObjectExpr(object map[string]any) {
 	for _, value := range object {
 		switch vt := value.(type) {
 		case []any:

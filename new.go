@@ -4,6 +4,6 @@ import (
 	"github.com/hetue/boot/internal/builder"
 )
 
-func New() *builder.Starter {
-	return builder.NewStarter()
+func New() *builder.Booter {
+	return builder.NewBooter()
 }

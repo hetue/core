@@ -6,15 +6,16 @@ require (
 	github.com/goexl/gex v0.4.8
 	github.com/goexl/gox v1.9.2
 	github.com/goexl/log v0.0.9
-	github.com/harluo/boot v1.6.7
+	github.com/harluo/boot v1.6.9
+	github.com/harluo/config v0.0.3
 	github.com/harluo/di v0.0.3
 )
 
 require (
-	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
 	github.com/drone/envsubst v1.0.3 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.26.0 // indirect
@@ -28,11 +29,11 @@ require (
 	github.com/goexl/structer v0.1.9 // indirect
 	github.com/goexl/xiren v0.0.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/harluo/config v0.0.2 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
-	github.com/mattn/go-runewidth v0.0.9 // indirect
+	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rs/xid v1.6.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/urfave/cli/v2 v2.27.6 // indirect

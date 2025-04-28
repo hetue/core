@@ -5,16 +5,16 @@ import (
 	"github.com/hetue/boot/internal/internal/param"
 )
 
-type Starter struct {
+type Booter struct {
 	param *param.Starter
 }
 
-func NewStarter() *Starter {
-	return &Starter{
+func NewBooter() *Booter {
+	return &Booter{
 		param: param.NewStarter(),
 	}
 }
 
-func (b *Starter) Build() *internal.Starter {
-	return internal.NewStarter(b.param)
+func (b *Booter) Build() *internal.Booter {
+	return internal.NewBooter(b.param)
 }
