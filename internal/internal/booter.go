@@ -4,11 +4,13 @@ import (
 	"github.com/harluo/boot"
 	"github.com/harluo/di"
 	"github.com/hetue/boot/internal/internal/internal"
+	"github.com/hetue/boot/internal/internal/internal/finder"
 	"github.com/hetue/boot/internal/internal/param"
 )
 
 type Booter struct {
 	param *param.Starter
+	_     finder.Handler
 }
 
 func NewBooter(param *param.Starter) *Booter {

@@ -29,6 +29,10 @@ func (d *Default) Find(key string) (value string) {
 	return
 }
 
+func (*Default) Order() uint8 {
+	return 1
+}
+
 func (d *Default) fixDrone(key string, from string) (value string) {
 	if "" == os.Getenv(constant.PlatformDrone) {
 		return
