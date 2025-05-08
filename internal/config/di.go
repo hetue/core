@@ -5,7 +5,7 @@ import (
 )
 
 func init() {
-	di.New().Get().Dependency().Puts(
+	di.New().Instance().Put(
 		newWrapper,
 
 		newRetry,   // 重试

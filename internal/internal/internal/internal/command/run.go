@@ -10,7 +10,6 @@ import (
 	"github.com/goexl/gox/field"
 	"github.com/goexl/gox/rand"
 	"github.com/goexl/log"
-	"github.com/harluo/boot"
 	"github.com/harluo/di"
 	"github.com/hetue/boot/internal/config"
 	"github.com/hetue/boot/internal/internal/internal/internal/command/internal/get"
@@ -18,8 +17,6 @@ import (
 )
 
 type Run struct {
-	*boot.Command
-
 	steps  []kernel.Step
 	retry  *config.Retry
 	logger log.Logger
@@ -27,15 +24,27 @@ type Run struct {
 
 func newRun(run get.Run) *Run {
 	return &Run{
-		Command: boot.NewCommand("run").Aliases("r").Usage("运行").Build(),
-
 		retry:  run.Retry,
 		logger: run.Logger,
 	}
 }
 
+func (*Run) Name() string {
+	return "run"
+}
+
+func (*Run) Aliases() []string {
+	return []string{
+		"r",
+	}
+}
+
+func (*Run) Usage() string {
+	return "运行"
+}
+
 func (r *Run) Run(ctx context.Context) (err error) {
-	if ie := di.New().Get().Dependency().Get(r.getSteps).Build().Build().Inject(); nil != ie {
+	if ie := di.New().Instance().Get(r.getSteps).Build().Inject(); nil != ie {
 		err = ie
 	} else {
 		err = r.run(ctx)

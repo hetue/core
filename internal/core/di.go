@@ -5,7 +5,7 @@ import (
 )
 
 func init() {
-	di.New().Get().Dependency().Puts(
+	di.New().Instance().Put(
 		newCommand, // 命令执行
 	).Build().Apply()
 }
