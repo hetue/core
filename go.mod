@@ -5,7 +5,7 @@ go 1.24
 require (
 	github.com/goexl/gex v0.4.8
 	github.com/goexl/gox v1.9.2
-	github.com/goexl/log v0.0.9
+	github.com/goexl/log v0.1.0
 	github.com/harluo/boot v1.7.3
 	github.com/harluo/config v0.0.7
 	github.com/harluo/di v0.0.5
